@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Request, UsePipes, ValidationPipe } from '@nestjs/common';
 import { QuizDto } from './quiz.dto';
 import { QuizService } from './quiz.service';
 
@@ -14,8 +14,8 @@ export class QuizController {
 
     @Post()
     @HttpCode(200)
-    @UsePipes(ValidationPipe)
-    creatQuiz(@Body() quizData: QuizDto) {
+    @UsePipes(ValidationPipe)   // validation message is in DTO file
+    creatQuiz(@Body() quizData: QuizDto, @Request() req) {
         return {
             data: quizData
         };
