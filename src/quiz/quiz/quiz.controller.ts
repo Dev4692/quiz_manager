@@ -1,4 +1,5 @@
-import { Body, Controller, Get, HttpCode, Post, Request, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Put, Request, UsePipes, ValidationPipe } from '@nestjs/common';
+import { UpdatedAt } from 'sequelize-typescript';
 import { QuizDto } from './quiz.dto';
 import { QuizService } from './quiz.service';
 
@@ -12,12 +13,24 @@ export class QuizController {
         return this.quizService.getAllQuiz();
     }
 
+    @Put()
+    async updateQuiz(@Body() body) {
+        await this.quizService.updateQuiz(body);
+        return {
+            msg: 'Updated Successfully!'
+        }
+    }
+
     @Post()
     @HttpCode(200)
     @UsePipes(ValidationPipe)   // validation message is in DTO file
-    creatQuiz(@Body() quizData: QuizDto, @Request() req) {
-        return {
-            data: quizData
-        };
+    async creatQuiz(@Body() quizData: QuizDto, @Request() req) {
+        return await this.quizService.creatQuiz(quizData);
     }
+
+
+
+
+
+
 }
