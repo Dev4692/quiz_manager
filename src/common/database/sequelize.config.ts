@@ -9,4 +9,6 @@ export const sequelizeConfig: SequelizeModuleOptions = {
     password: 'Momdad26@home',
     database: 'nest',
     models: [Quiz],
+    autoLoadModels: true,
+    synchronize: true,
 }

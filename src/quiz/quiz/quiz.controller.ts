@@ -28,9 +28,4 @@ export class QuizController {
         return await this.quizService.creatQuiz(quizData);
     }
 
-
-
-
-
-
 }

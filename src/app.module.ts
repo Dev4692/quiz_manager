@@ -8,7 +8,7 @@ import { QuizModule } from './quiz/quiz/quiz.module';
 
 @Module({
   imports: [
-    QuizModule, SequelizeModule.forRoot(sequelizeConfig),
+    SequelizeModule.forRoot(sequelizeConfig), QuizModule
   ],
   controllers: [AppController],
   providers: [AppService],
