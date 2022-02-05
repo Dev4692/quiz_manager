@@ -26,9 +26,44 @@ export class UserService {
 
     }
 
+    async getActiveUsers(isActive) {
+        let user = await this.userModel.findAll({
+            where: {
+                isActive: isActive
+            }
+        });
+        return user;
+    }
+
     // api to get user by primary key i.e. email id
     async getUserByPk(email) {
         const user = await this.userModel.findByPk(email)
         return user;
+    }
+
+    async getUserPegination(query) {
+        console.log(`query.p type===========${typeof (query.p)}`);
+        const page = parseInt(query.p);
+        const perPage = parseInt(query.pp);
+        let offset = (page - 1) * perPage;
+        let limit = perPage;
+
+        console.log(`page=====${page}-----perPage=====${perPage}`)
+
+        const data = await this.userModel.findAndCountAll({
+            offset,
+            limit
+        });
+
+        console.log(`data=====${JSON.stringify(data)}`);
+    }
+
+    async update_status(body) {
+
+        let updateObj = {};
+        updateObj['isActive'] = body.isActive;
+        let account = await this.userModel.findByPk(body.email);
+        return await account.update(updateObj);
+
     }
 }
