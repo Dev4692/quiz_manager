@@ -1,5 +1,6 @@
 import { SequelizeModuleOptions } from "@nestjs/sequelize";
 import { Customer } from "src/customer/customer.model";
+import { Post } from "src/customer/post/post.model";
 import { Question } from "src/quiz/questions/question.model";
 import { Quiz } from "src/quiz/quiz/quiz.model";
 import { User } from "src/user/user.model";
@@ -11,7 +12,7 @@ export const sequelizeConfig: SequelizeModuleOptions = {
     username: 'root',
     password: 'Momdad26@home',
     database: 'nest',
-    models: [Quiz, Question, User, Customer],
+    models: [Quiz, Question, User, Customer, Post],
     autoLoadModels: true,
     synchronize: true,
 }
