@@ -22,7 +22,22 @@ export class UserService {
 
     async getAllUser() {
         let user = await this.userModel.findAll();
-        return user;
+        let active_users = await this.userModel.count({
+            where: {
+                isActive: 1
+            }
+        })
+        let inActive_users = await this.userModel.count({
+            where: {
+                isActive: 0
+            }
+        })
+        return {
+            active_users,
+            inActive_users,
+            user,
+
+        };
 
     }
 
@@ -43,17 +58,27 @@ export class UserService {
 
     async getUserPegination(query) {
         console.log(`query.p type===========${typeof (query.p)}`);
-        const page = parseInt(query.p);
+        // const page = parseInt(query.p);
+        const page = parseInt(query.p)
         const perPage = parseInt(query.pp);
         let offset = (page - 1) * perPage;
         let limit = perPage;
-
+        let data;
         console.log(`page=====${page}-----perPage=====${perPage}`)
 
-        const data = await this.userModel.findAndCountAll({
-            offset,
-            limit
-        });
+        try {
+            data = await this.userModel.findAndCountAll({
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                offset: 0,
+                limit: 10
+            });
+            return data;
+        } catch (error) {
+            // console.log(error)
+            return error
+        }
 
         console.log(`data=====${JSON.stringify(data)}`);
     }
